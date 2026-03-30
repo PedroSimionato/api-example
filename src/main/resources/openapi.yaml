@@ -1,0 +1,117 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+security:
+  - Authorization: []
+paths:
+  /api/v1/proposal:
+    post:
+      tags:
+        - proposal-controller
+      operationId: createProposal
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proposal'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+  /api/v1/proposals/{id}:
+    get:
+      tags:
+        - proposal-controller
+      operationId: getProposalById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+        '404':
+          description: Not Found
+    delete:
+      tags:
+        - proposal-controller
+      operationId: deleteProposalById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+    patch:
+      tags:
+        - proposal-controller
+      operationId: updateProposalById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Proposal'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Proposal'
+components:
+  schemas:
+    Proposal:
+      type: object
+      properties:
+        code:
+          type: string
+        createdAt:
+          type: string
+        documents:
+          $ref: '#/components/schemas/DocumentsDto'
+        offers:
+          type: array
+          $ref: '#/components/schemas/OffersDto'
+    DocumentsDto:
+      type: object
+      properties:
+        documentType:
+          type: string
+        number:
+          type: string
+        uf:
+          type: string
+        state:
+          type: string
+        OffersDto:
+          type: object
+    OffersDto:
+      type: object
+      properties:
+        mediaType:
+          type: string
+        name:
+          type: string
+        console:
+          type: string
